@@ -23,8 +23,8 @@ RUN apt-get install wget -y
 WORKDIR /download
 ARG downloadUrl
 RUN wget -q $downloadUrl -O - | tar -xz
+RUN if [ "${downloadUrl#*android-studio}" != "$downloadUrl" ]; then rm android-studio/bin/game-tools.sh; fi
 RUN find . -maxdepth 1 -type d -name * -execdir mv {} /ide \;
-
 FROM amazoncorretto:11 as projectorGradleBuilder
 
 ENV PROJECTOR_DIR /projector
