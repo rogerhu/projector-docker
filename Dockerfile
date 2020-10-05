@@ -66,6 +66,7 @@ ADD projector-docker/static $PROJECTOR_DIR
 COPY --from=projectorGradleBuilder $PROJECTOR_DIR/projector-client/projector-client-web/build/distributions $PROJECTOR_DIR/distributions
 COPY --from=projectorGradleBuilder $PROJECTOR_DIR/projector-server/projector-server/build/distributions/projector-server-1.0-SNAPSHOT.zip $PROJECTOR_DIR
 COPY --from=projectorGradleBuilder $PROJECTOR_DIR/projector-markdown-plugin/build/distributions/projector-markdown-plugin-1.0-SNAPSHOT.zip $PROJECTOR_DIR
+COPY --from=projectorGradleBuilder /usr/lib/jvm/java-11-amazon-corretto $PROJECTOR_DIR/java11
 # prepare IDE - apply projector-server:
 RUN unzip $PROJECTOR_DIR/projector-server-1.0-SNAPSHOT.zip
 RUN rm $PROJECTOR_DIR/projector-server-1.0-SNAPSHOT.zip
@@ -146,3 +147,6 @@ RUN true \
 
 USER $PROJECTOR_USER_NAME
 ENV HOME /home/$PROJECTOR_USER_NAME
+ENV IDEA_JDK /projector/java11
+ENV JAVA_HOME /projector/java11
+ENV STUDIO_JDK /projector/java11
